@@ -1,0 +1,4 @@
+FROM apache/airflow:2.5.0
+
+# Example of how to install dependencies in the worker container.
+RUN pip install --no-input dynaconf binance-connector==2.0.0
