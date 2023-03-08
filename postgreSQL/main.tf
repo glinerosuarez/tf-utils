@@ -23,6 +23,10 @@ resource "docker_container" "postgres" {
     volume_name    = docker_volume.db.name
     container_path = "/var/lib/postgresql/data"
   }
+  volumes {
+    host_path = var.init_queries_path
+    container_path = "/docker-entrypoint-initdb.d"
+  }
   healthcheck {
     test     = ["CMD", "pg_isready", "-U", "postgres"]
     interval = "5s"
