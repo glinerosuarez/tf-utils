@@ -26,7 +26,7 @@ resource "docker_container" "postgres" {
     container_path = "/var/lib/postgresql/data"
   }
   volumes {
-    host_path      = var.init_queries_path == null ? path.module : var.init_queries_path
+    host_path      = abspath(var.init_queries_path == null ? path.module : var.init_queries_path)
     container_path = "/docker-entrypoint-initdb.d"
   }
 
