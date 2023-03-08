@@ -31,6 +31,6 @@ resource "docker_container" "postgres" {
   restart = "always"
 
   provisioner "local-exec" {
-    command = "bash ${path.root}/healthy_check.sh ${self.name}"
+    command = "bash ${path.module}/healthy_check.sh ${self.name}"
   }
 }
