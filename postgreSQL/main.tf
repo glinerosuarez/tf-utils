@@ -16,23 +16,25 @@ resource "docker_volume" "db" {
 }
 
 resource "docker_container" "postgres" {
-  image = docker_image.postgres.image_id
-  name  = "db"
-  env   = ["POSTGRES_USER=${var.user}", "POSTGRES_PASSWORD=${var.password}", "POSTGRES_DB=${var.db_name}"]
+  image   = docker_image.postgres.image_id
+  name    = "db"
+  env     = ["POSTGRES_USER=${var.user}", "POSTGRES_PASSWORD=${var.password}", "POSTGRES_DB=${var.db_name}"]
+  restart = "always"
+
   volumes {
     volume_name    = docker_volume.db.name
     container_path = "/var/lib/postgresql/data"
   }
   volumes {
-    host_path = var.init_queries_path
+    host_path      = var.init_queries_path == null ? path.module : var.init_queries_path
     container_path = "/docker-entrypoint-initdb.d"
   }
+
   healthcheck {
     test     = ["CMD", "pg_isready", "-U", "postgres"]
     interval = "5s"
     retries  = 5
   }
-  restart = "always"
 
   provisioner "local-exec" {
     command = "bash ${path.module}/healthy_check.sh ${self.name}"
