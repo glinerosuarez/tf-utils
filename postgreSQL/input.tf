@@ -18,6 +18,7 @@ variable "db_name" {
 
 variable "init_queries_path" {
   type        = string
+  default     = null
   nullable    = true
   description = "Path to init scripts."
 }
