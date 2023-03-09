@@ -26,22 +26,18 @@ resource "docker_container" "mysql" {
     external = 3306
   }
 
-  /*volumes {
-    volume_name    = docker_volume.db.name
-    container_path = "/var/lib/postgresql/data"
-  }
   volumes {
     host_path      = abspath(var.init_queries_path == null ? path.module : var.init_queries_path)
     container_path = "/docker-entrypoint-initdb.d"
   }
 
   healthcheck {
-    test     = ["CMD", "pg_isready", "-U", "postgres"]
+    test     = ["CMD", "mysqladmin", "ping", "-u", "root", "-p${var.root_password}"]
     interval = "5s"
     retries  = 5
   }
 
   provisioner "local-exec" {
     command = "bash ${path.module}/healthy_check.sh ${self.name}"
-  }*/
+  }
 }
