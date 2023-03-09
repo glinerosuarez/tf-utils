@@ -11,10 +11,6 @@ resource "docker_image" "mysql" {
   keep_locally = false
 }
 
-resource "docker_volume" "db" {
-  name = "mysql-db-volume"
-}
-
 resource "docker_container" "mysql" {
   image   = docker_image.mysql.image_id
   name    = "db"
