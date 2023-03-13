@@ -7,7 +7,7 @@ terraform {
 }
 
 resource "docker_image" "pyspark" {
-  name = "pyspark"
+  name         = "pyspark"
   keep_locally = false
   build {
     context = path.module
@@ -18,10 +18,10 @@ resource "docker_image" "pyspark" {
 }
 
 resource "docker_container" "pyspark" {
-  image = docker_image.pyspark.image_id
-  name  = "pyspark"
-  tty = true
-  command = ["python"]
+  image    = docker_image.pyspark.image_id
+  name     = "pyspark"
+  tty      = true
+  command  = ["python"]
   must_run = false
   ports {
     internal = 4040
